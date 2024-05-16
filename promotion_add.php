@@ -1,0 +1,255 @@
+<?php
+session_start();
+
+$host = 'localhost';
+$dbname = 'Scinema';
+$username = 'root';
+$password = 'root';
+
+$conn = new mysqli($host, $username, $password, $dbname);
+
+// ตรวจสอบว่ามีข้อผิดพลาดในการเชื่อมต่อหรือไม่
+if ($conn->connect_error) {
+    die("การเชื่อมต่อล้มเหลว: " . $conn->connect_error);
+}
+
+// ตรวจสอบว่ามีการเข้าสู่ระบบหรือไม่
+if (isset($_SESSION['user_id'])) {
+    // เรียกดูข้อมูลของผู้ใช้จากฐานข้อมูล
+    $user_id = $_SESSION['user_id'];
+    $sql_user = "SELECT * FROM users WHERE UserID = $user_id";
+    $result_user = $conn->query($sql_user);
+
+    if ($result_user->num_rows > 0) {
+        $user_data = $result_user->fetch_assoc();
+        $user_name = $user_data['Username'];
+    }
+}
+
+// ตรวจสอบว่ามีการส่งข้อมูลฟอร์มและเป็นการส่งข้อมูล POST หรือไม่
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // ตรวจสอบว่ามีข้อมูลที่จำเป็นถูกกรอกหรือไม่
+    if (!empty($_POST['promotion_name']) && !empty($_POST['start_date']) && !empty($_POST['end_date']) && !empty($_POST['discount_amount'])) {
+        $promotion_name = $_POST['promotion_name'];
+        $start_date = $_POST['start_date'];
+        $end_date = $_POST['end_date'];
+        $discount_amount = $_POST['discount_amount'];
+
+        // เตรียมคำสั่ง SQL เพื่อเพิ่มข้อมูลใหม่
+        $sql = "INSERT INTO promotion (PromotionName, StartDate, EndDate, DiscountAmount) VALUES ('$promotion_name', '$start_date', '$end_date', '$discount_amount')";
+
+        if ($conn->query($sql) === TRUE) {
+            // Redirect to promotion_more.php after successful submission
+            header("Location: promotion_more.php");
+            exit(); // Ensure that code below is not executed after redirection
+        } else {
+            echo "เกิดข้อผิดพลาดในการเพิ่มข้อมูล: " . $conn->error;
+        }
+    } else {
+        // แสดงการแจ้งเตือนด้วย JavaScript เมื่อไม่มีข้อมูลถูกกรอก
+        echo "<script>alert('กรุณากรอกข้อมูลที่จำเป็น');</script>";
+    }
+}
+
+?>
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Promotion</title>
+    <!-- ลิงก์ CSS ของ Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    
+    <style>
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 9999;
+    margin-bottom: 20px; /* เพิ่มพื้นที่ด้านล่างของ Navbar */
+}
+
+.navbar-brand {
+            position: relative;
+            left: 20px;
+            margin-right: 60px;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333333;
+            background-color: #382628;
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(10px);
+        }
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9);            
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 800px;
+    transform: scale(1);
+
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+input[type="submit"],
+.btn-cancel {
+    background: linear-gradient(135deg, #382628, #73373E);
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+input[type="submit"]:hover,
+.btn-cancel:hover {
+    background-color: #23A7C8;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #382628, #73373E);
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-container {
+    text-align: center;
+}
+
+.btn-secondary:hover {
+    background-color: #F0368D;
+}
+
+.dropdown-menu {
+    left: auto;
+    right: 0;
+}
+</style>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-center">
+    <a class="navbar-brand" href="#">Scinema</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="ShowMovie.php">Movie</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="all_actors.php">Actors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="all_director.php">Directors </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="promotion_more.php">Promotion</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="room_status.php">Room status</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="poster_more.php">Poster</a>
+            </li>
+        </ul>
+    </div>
+    <div class="dropdown" style="margin-right: 20px;">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <?php
+            if (isset($_SESSION['user_id'])) {
+                echo '<i class="fas fa-user icon" style="margin-right: 10px;"></i>' . $_SESSION['user_name'];
+            } else {
+                echo 'Login';
+            }
+            ?>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <?php
+        if (isset($_SESSION['user_id'])) {
+            echo '<a class="dropdown-item" href="logoutContrl.php">Logout</a>';
+            echo '<a class="dropdown-item" href="edit_pass_control.php">Change Credent</a>';
+        }
+        ?>
+    </div>
+    </div>
+</nav>
+    <div class="container">
+        <h2>Add Promotion</h2>
+        <!-- ใช้ Bootstrap classes ในการจัดรูปแบบฟอร์ม -->
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <div class="form-group">
+                <label for="promotion_name">Promotion Name:</label>
+                <input type="text" class="form-control" id="promotion_name" name="promotion_name">
+            </div>
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" class="form-control" id="start_date" name="start_date">
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" class="form-control" id="end_date" name="end_date">
+            </div>
+            <div class="form-group">
+                <label for="discount_amount">Discount Amount:</label>
+                <input type="number" class="form-control" id="discount_amount" name="discount_amount">
+            </div>
+            <input type="submit" class="btn btn-primary"></input><br>
+            <a href="promotion_more.php" class="btn btn-secondary">Cancel</a>
+</form>
+    </div>
+</body>
+</html>

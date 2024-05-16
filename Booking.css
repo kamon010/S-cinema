@@ -1,0 +1,333 @@
+/* CSS Styles */
+body {
+    margin: 0;
+    background-color: #000;
+    color: #FFF;
+    font-family: Arial, sans-serif;
+    margin-top: 70px;
+    /* เพิ่ม margin-top เพื่อห่างจากบาร์ด้านบน */
+}
+
+nav {
+    background-color: #212121;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    position: fixed;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    margin: 0 10px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    color: #FF3187;
+}
+
+.nav-link:hover .user-icon {
+    bottom: 10px;
+}
+
+.nav-link:hover i {
+    transform: translateY(-5px);
+}
+
+i {
+    transition: transform 0.3s ease-in-out;
+}
+
+section {
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    /* Limiting the width of the content */
+}
+
+footer {
+    background-color: #212121;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.movie-details {
+    display: flex;
+    justify-content: space-between;
+    /* Aligning the items with space between */
+    align-items: center;
+    /* Vertically centering the items */
+}
+
+.movie-poster {
+    width: 300px;
+    margin-right: 20px;
+}
+
+.movie-details-text {
+    flex: 1;
+    text-align: left;
+}
+
+.seat-btn {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    background-color: #FF3187;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.movie-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.movie-details-text {
+    max-width: 400px;
+    /* ปรับขนาดตามที่ต้องการ */
+    margin: 0 20px;
+    /* ปรับขนาดตามที่ต้องการ */
+}
+
+#seatContainer {
+    display: flex;
+    justify-content: center;
+    /* ตำแหน่งที่นั่งกลางตามแนวนอน */
+    align-items: center;
+    /* ตำแหน่งที่นั่งกลางตามแนวตั้ง */
+    flex-wrap: wrap;
+    max-width: 600px;
+    /* ปรับขนาดตามที่ต้องการ */
+    margin: 20px 0;
+    /* ปรับขนาดตามที่ต้องการ */
+}
+
+#seatContainer div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    /* ที่นั่งไปชิดขวาสุด */
+}
+
+.seat-btn {
+    margin: 5px;
+}
+
+.seat-btn.selected {
+    background-color: #8D003B;
+    /* Changing the color when selected */
+}
+
+.seat-btn:hover {
+    background-color: #722B48;
+}
+
+/* เพิ่มสีสำหรับที่นั่งที่ถูกจองแล้ว */
+.seat-btn.booked {
+    background-color: #E9953C;
+    pointer-events: none;
+    /* ทำให้ไม่สามารถคลิกได้ */
+    cursor: not-allowed;
+    /* เปลี่ยน cursor เป็น not-allowed */
+}
+
+/* เพิ่มสีสำหรับที่นั่งที่ถูกเลือก */
+.seat-btn.selected {
+    background-color: #8D003B;
+}
+
+h1 {
+    margin-top: 20px;
+    /* Adding top margin to h1 */
+}
+
+h2 {
+    text-align: center;
+    /* Centering the h2 */
+}
+
+.user-icon {
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    background: url('https://www.majorcineplex.com/public/mobile_new_assets/img/avatar.png') no-repeat center center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: bottom 0.5s ease-in-out;
+    position: absolute;
+    /* Position the user icon absolutely within the .nav-link */
+    bottom: 10px;
+    /* Initially set to 10px from the bottom */
+}
+
+/* สไตล์ CSS สำหรับแถบข้อความที่ยื่นออกมา */
+.menu-container {
+    display: none;
+    position: fixed;
+    top: 70px;
+    right: 10px;
+    background-color: #333;
+    color: #FFF;
+    padding: 10px;
+    border-radius: 5px;
+    flex-direction: column;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.menu-item {
+    text-align: left;
+    padding: 10px;
+    /* เพิ่ม Padding เพื่อให้มีพื้นที่รอบๆ ข้อความ */
+    transition: background-color 0.3s ease;
+    /* เพิ่มเอฟเฟกต์ transition สำหรับเปลี่ยนสีพื้นหลัง */
+}
+
+.menu-item:hover {
+    background-color: #555;
+    /* เปลี่ยนสีพื้นหลังเมื่อนำเมาส์ hover */
+}
+
+.menu-item::before {
+    content: '\2022';
+    /* รหัส Unicode สำหรับเครื่องหมายดอกจัน (•) */
+    color: #FF3187;
+    /* สีไอคอน */
+    margin-right: 5px;
+    /* ระยะห่างระหว่างไอคอนกับข้อความ */
+}
+
+body {
+    margin-top: 70px;
+}
+
+.menu-container {
+    text-align: left;
+}
+
+.email-container {
+    position: fixed;
+    top: 15px;
+    right: 60px;
+    padding: 10px;
+    z-index: 1001;
+}
+
+.email-link {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #333;
+    /* เปลี่ยนสีพื้นหลังเป็นสีเทาเข้ม */
+    margin-top: 0px;
+    /* ปรับตำแหน่งของ email-link ขึ้น */
+}
+
+.email-link:hover {
+    background-color: #444;
+    /* เปลี่ยนสีพื้นหลังเมื่อโฮเวอร์เป็นสีเทาเข้มขึ้น */
+}
+
+.button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button button {
+    background-color: #670015;
+    /* เปลี่ยนสีพื้นหลังปุ่ม */
+    color: white;
+    padding: 4px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    /* เพิ่มการเปลี่ยนสีพื้นหลังอย่างน้อย 0.3 วินาที */
+}
+
+.button button:hover {
+    background-color: #ff6699;
+    /* เปลี่ยนสีพื้นหลังปุ่มเมื่อเม้าส์ชี้ */
+}
+/* เพิ่มสีสำหรับสถานะการจองที่ Cancel */
+.seat-btn.cancelled {
+    background-color: #FF3187; /* กำหนดสีแดงสำหรับเก้าอี้ที่ Cancel */
+    color: white; /* กำหนดสีข้อความเป็นสีขาว */
+}
+.image-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    white-space: nowrap;
+}
+
+.image-container img {
+    width: 100%;
+    /* ปรับขนาดภาพให้เต็ม container */
+    max-width: 100%;
+    /* ปรับขนาดสูงสุดให้ภาพไม่ขยายเกินขนาดต้นฉบับ */
+    max-height: 300px;
+    /* ปรับความสูงสูงสุดของภาพ */
+    margin-right: 10px;
+    scroll-snap-align: start;
+}
+/* เพิ่ม CSS เพื่อแยก option ด้วยการกำหนด margin */
+#director option {
+    margin-right: 5px;
+}
+
+/* เพิ่ม CSS เพื่อจัดการพื้นที่สำหรับกราฟ */
+canvas {
+    margin-top: 20px;
+}
+        
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.chart {
+    flex: 1;
+    /* คำสั่งเพิ่มขนาดกราฟให้เต็มพื้นที่ที่สามารถ */
+    margin-right: 20px;
+    height: 300px;
+    /* ระบุความสูงของกราฟเท่ากับความสูงของกราฟ Sales by Gender */
+}
+
+
+
